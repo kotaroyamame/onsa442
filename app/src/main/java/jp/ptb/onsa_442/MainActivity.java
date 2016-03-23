@@ -1,12 +1,14 @@
 package jp.ptb.onsa_442;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -27,6 +29,7 @@ protected static final int  BITRATE     = 16;    // [bit/sec]
 static private double amplification = 0.5;  // [0.0, 1.0]
 static private double frequency = 442;      // [Hz]
 static private double duration = 1.0;       // [sec]
+private RelativeLayout bg;
 
 /**
  * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -39,6 +42,7 @@ protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
   setContentView(R.layout.activity_main);
   this.adV();
+  bg=(RelativeLayout)this.findViewById(R.id.bg);
 }
 @Override
 public void onResume(){
@@ -96,8 +100,10 @@ public boolean onTouchEvent(MotionEvent event) {
         audioTrack.reloadStaticData();
         audioTrack.setLoopPoints(0,buffer.length,-1);
         audioTrack.play();
+        bg.setBackgroundColor(Color.parseColor("#fffbba"));
       }else{
         audioTrack.stop();
+        bg.setBackgroundColor(Color.parseColor("#ffffff"));
       }
       break;
     case MotionEvent.ACTION_UP:
